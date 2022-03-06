@@ -22,6 +22,22 @@ You can test the bot on a [demo server](https://discord.gg/fEhhTAsuXA) we have c
    - Note: You can use `$getbook <bookname>` to find a specific book.
 6. `$help`: Returns this menu.
 
-
 ## Note
-API key has to be stored in a `.env` file as an environment variable called `TOKEN`
+API token has to be stored in a `.env` file as an environment variable called `TOKEN`
+
+## Installation
+
+- Create an account on the [Discord Developer Portal](https://discord.com/developers).
+- Create a new Application.
+- Create a new bot from the Bot tab.
+- Create a server on discord to test your bot.
+- On the Developer Portal, go to OAuth2 -> URL Generator.
+- Click `bot` in the Scopes section, and `Send Messages`, `Send Messages in Threads`, `Send TTS Messages`, `Embed Links`, and `Attach Files` in the Permissions section.
+- Use the generated link to add the bot to your server.
+- Copy the API token for the bot from the Token section in the Bot tab.
+- Save the token as `TOKEN=<insert token here>` in a `.env` file in your working directory.
+- Install the prerequisite libraries:
+    - `python3 -m pip install -U discord.py`
+    - `python3 -m pip install requests`
+- Run bot.py
+- Message `$help` in a channel in your server to get the list of commands
