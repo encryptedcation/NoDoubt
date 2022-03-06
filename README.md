@@ -1,5 +1,5 @@
 # NoDoubt
-Made by @sociallyencrypted and @cation03
+Made by @cation03 (Ananya Goyal, 2021011) and @sociallyencrypted (Mehul Arora, 2021066)
 
 ## Resources
 - [GutenDex API](http://gutendex.com/)
