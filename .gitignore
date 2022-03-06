@@ -1,3 +1,5 @@
 .env
 .replit
 .vscode
+poetry.lock
+pyproject.toml

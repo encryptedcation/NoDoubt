@@ -1,4 +1,3 @@
-# Testing discord.py
 import discord
 import os
 import requests
@@ -6,66 +5,47 @@ import base64
 import random
 
 async def gutenDex(queries, author, channel):
-    url = "http://gutendex.com/books?search="
-    url += queries
-    req = requests.get(url)
-    if req.status_code == requests.codes.ok:
-        req = req.json()
-        content = (req["results"])
-        titles = []
-        links = {}
-        for item in content:
-          mytitle = item['title']
-          mylinks = item['formats']
-          titles.append(mytitle)
-          links[mytitle] = mylinks
-        res = ''
-        for i in  range(len(titles)):
-            res += f'{i+1}. {titles[i]}'
-            res += '\n'
-        embed = discord.Embed(title = "Available Books", description = res)
-        embed.set_author(name="Project Gutenberg", url="https://www.gutenberg.org/", icon_url= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Project_Gutenberg_logo.svg/1200px-Project_Gutenberg_logo.svg.png")
-        await channel.send(embed=embed)
-        n = await client.wait_for('message', check=check(author), timeout=30)
-        n = int(n.content)
-        printstr  = ''
-        for x in links[titles[n-1]]:
-            printstr+=(x+" : "+links[titles[n-1]][x])
-            printstr += '\n'
-        embed2 = discord.Embed(title = titles[n-1], description = printstr)
-        embed2.set_author(name="Project Gutenberg", url="https://www.gutenberg.org/", icon_url= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Project_Gutenberg_logo.svg/1200px-Project_Gutenberg_logo.svg.png")
-        await channel.send(embed=embed2)
+    name = "Project Gutenberg"
+    url="https://www.gutenberg.org/"
+    icon_url= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Project_Gutenberg_logo.svg/1200px-Project_Gutenberg_logo.svg.png"
+    
+    if queries == '0':
+        url = f"http://gutendex.com/books?page={str(random.randrange(1,100))}"
     else:
-        channel.send("Project Gutenberg not available :(")
-
-async def gutenDexRand(author, channel):
-    url = "http://gutendex.com/books?page="
-    url += str(random.randrange(1,100))
+        url = f'http://gutendex.com/books?search={queries}'
+        
     req = requests.get(url)
+  
     if req.status_code == requests.codes.ok:
         req = req.json()
         content = (req["results"])
         titles = []
         links = {}
+      
         for item in content:
+          
           mytitle = item['title']
           mylinks = item['formats']
           titles.append(mytitle)
           links[mytitle] = mylinks
+          
         res = ''
+      
         for i in  range(len(titles)):
             res += f'{i+1}. {titles[i]}\n'
         embed = discord.Embed(title = "Available Books", description = res)
-        embed.set_author(name="Project Gutenberg", url="https://www.gutenberg.org/", icon_url= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Project_Gutenberg_logo.svg/1200px-Project_Gutenberg_logo.svg.png")
+        embed.set_author(name = name, url = url, icon_url = icon_url)
         await channel.send(embed=embed)
         n = await client.wait_for('message', check=check(author), timeout=30)
         n = int(n.content)
         printstr  = ''
+      
         for x in links[titles[n-1]]:
-            printstr += f'{x} : {links[titles[n-1]][x]}\n'
+            printstr+= f'{x} : {links[titles[n-1]][x]}\n'
         embed2 = discord.Embed(title = titles[n-1], description = printstr)
-        embed2.set_author(name="Project Gutenberg", url="https://www.gutenberg.org/", icon_url= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Project_Gutenberg_logo.svg/1200px-Project_Gutenberg_logo.svg.png")
+        embed2.set_author(name = name, url = url, icon_url = icon_url)
         await channel.send(embed=embed2)
+
     else:
         channel.send("Project Gutenberg not available :(")
 
@@ -178,20 +158,20 @@ class MyClient(discord.Client):
             return
 
         if message.content.startswith("$resources"):
+            title="SemWiseResourcesIIIT"
+            url="https://api.github.com/repos/aflah02/SemWiseResourcesIIIT/contents/README.md"
             if len(message.content.split()) == 1:
                 embed = discord.Embed(
-                    title="SemWiseResourcesIIIT",
-                    url=
-                    "https://api.github.com/repos/aflah02/SemWiseResourcesIIIT/contents/README.md",
+                    title=title,
+                    url=url,
                     description=
                     ("Here are the following courses for which resources are present. To access resources for a specific course, type `$resources <coursename>`\n\n"
                      + '\n'.join(courses())))
 
             elif len(message.content.split()) >= 2:
                 embed = discord.Embed(
-                    title="SemWiseResourcesIIIT",
-                    url=
-                    "https://api.github.com/repos/aflah02/SemWiseResourcesIIIT/contents/README.md",
+                    title=title,
+                    url=url,
                     description=('\n'.join(
                         getCourseContent(' '.join(
                             message.content.split()[1:])))))
@@ -217,7 +197,7 @@ class MyClient(discord.Client):
             x = message.content.split()
             
             if len(x) == 1:
-                await gutenDexRand(author=message.author, channel=message.channel)
+                await gutenDex(queries= '0', author=message.author, channel=message.channel)
             else:
                 quer = x[1:]
                 quer = str('%20'.join(quer))
@@ -230,6 +210,7 @@ class MyClient(discord.Client):
               description=f'title: {res[3]} \n author: {res[2]}')
             embed.set_image(url=res[1])
             await message.channel.send(embed=embed)
+            
         if message.content.startswith("$help"):
             help = '''
           1. **$memes**: Gets random wholesome memes from Reddit.
