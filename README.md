@@ -13,9 +13,15 @@ Made by @cation03 (Ananya Goyal, 2021011) and @sociallyencrypted (Mehul Arora, 2
 You can test the bot on a [demo server](https://discord.gg/fEhhTAsuXA) we have created.
 
 ## Commands
+
 1. `$memes`: Gets random wholesome memes from Reddit.
-2. `$xkcd`: Gets a random XKCD comic
-3. `$resources`: Gets IIIT Delhi academic resources from Aflah's Github repo.
+2. `$xkcd`: Gets a random XKCD comic.
+3. `$resources`: Gets list of courses for which resources are available from Aflah's Github repo. Use `$resources <coursename>` to get resources for the specific course.
 4. `$b99`: Gets a random dialogue from Brooklyn Nine Nine.
-5. `$getbook`: Gets links of books from Project Gutenberg.
+5. `$getbook`: Gets 32 random books from Project Gutenberg. Select a book by entering its number to get the links for the book.
+   - Note: You can use `$getbook <bookname>` to find a specific book.
 6. `$help`: Returns this menu.
+
+
+## Note
+API key has to be stored in a `.env` file as an environment variable called `TOKEN`
