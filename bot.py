@@ -30,16 +30,18 @@ async def gutenDex(queries, author, channel):
           links[mytitle] = mylinks
           
         res = ''
-      
-        for i in  range(len(titles)):
-            res += f'{i+1}. {titles[i]}\n'
-        embed = discord.Embed(title = "Available Books", description = res)
-        embed.set_author(name = name, url = url, icon_url = icon_url)
-        await channel.send(embed=embed)
-        n = await client.wait_for('message', check=check(author), timeout=30)
-        n = int(n.content)
-        printstr  = ''
-      
+        if len(titles) == 0:
+            await channel.send('**Sorry. No results found.**')
+        else:
+            for i in  range(len(titles)):
+                res += f'{i+1}. {titles[i]}\n'
+            embed = discord.Embed(title = "Available Books", description = res)
+            embed.set_author(name = name, url = url, icon_url = icon_url)
+            await channel.send(embed=embed)
+            n = await client.wait_for('message', check=check(author), timeout=30)
+            n = int(n.content)
+            printstr  = ''
+            
         for x in links[titles[n-1]]:
             printstr+= f'{x} : {links[titles[n-1]][x]}\n'
         embed2 = discord.Embed(title = titles[n-1], description = printstr)
@@ -131,6 +133,16 @@ def check(author):
             return False
     return inner_check
 
+def mydef(word):
+  url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+  req = requests.get(url)
+  if req.status_code == requests.codes.ok:
+      req = req.json()
+      content = req[0]["meanings"][0]['definitions'][0]['definition']
+      return content
+  else:
+      content = "Definition not available."
+      return content
 
 def memes():
     url = "https://meme-api.herokuapp.com/gimme/wholesomememes"
@@ -190,6 +202,7 @@ class MyClient(discord.Client):
             embed.set_image(url=res[2])
             embed.set_author(name="xkcd", url = "https://xkcd.com", icon_url = "https://camo.githubusercontent.com/59039af436c3ada34ebad55ae1afa3664926c8f520ae81e177844cbadedfbcc7/68747470733a2f2f776562636f6d6963736875622e636f6d2f75706c6f6164732f776562636f6d6963732f786b63642d3132383078313032342e706e67")
             await message.channel.send(embed=embed)
+          
         if message.content.startswith('$b99'):
             await message.channel.send("_" + b99Quotes() + "_")
           
@@ -198,6 +211,7 @@ class MyClient(discord.Client):
             
             if len(x) == 1:
                 await gutenDex(queries= '0', author=message.author, channel=message.channel)
+           
             else:
                 quer = x[1:]
                 quer = str('%20'.join(quer))
@@ -219,13 +233,23 @@ class MyClient(discord.Client):
             4. `$b99`: Gets a random dialogue from Brooklyn Nine Nine.
             5. `$getbook`: Gets 32 random books from Project Gutenberg. Select a book by entering its number to get the links for the book.
                 Note: You can use `$getbook <bookname>` to find a specific book.
-            6. `$help`: Returns this menu.
+            6. `$define <word>:` Gets the definition of the word.
+            7. `$help`: Returns this menu.
             '''
             embed = discord.Embed(title = 'Help',
                 description=help)
             await message.channel.send(embed=embed)
-      
           
+        if message.content.startswith("$define"):
+            content = message.content.split()
+            my_word = content[1]
+            res = mydef(my_word)
+            embed = discord.Embed(
+              title=my_word,
+              description = f'_{res}_'
+            )
+            await message.channel.send(embed=embed)
 
+          
 client = MyClient()
 client.run(os.getenv("TOKEN"))
