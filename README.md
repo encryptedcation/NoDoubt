@@ -19,10 +19,10 @@ You can test the bot on a [demo server](https://discord.gg/fEhhTAsuXA) we have c
 2. `$xkcd`: Gets a random XKCD comic.
 3. `$resources`: Gets list of courses for which resources are available from Aflah's Github repo. Use `$resources <coursename>` to get resources for the specific course.
 4. `$b99`: Gets a random dialogue from Brooklyn Nine Nine.
-5. `$getbook`: Gets 32 random books from Project Gutenberg. Select a book by entering its number to get the links for the book.
-   - Note: You can use `$getbook <bookname>` to find a specific book.
-- 6. `$define`: (Use `$define <word>`) Returns the definition of the word.
-- 7. `$help`: Returns this menu.
+5. `$getbook`: Gets 32 random books from Project Gutenberg. Select a book by entering its number to get the links for the book. Note: You can use `$getbook <bookname>` to find a specific book.
+6. `$define`: (Use `$define <word>`) Returns the definition of the word.
+7. `$help`: Returns this menu.
+
 
 ## Note
 API token has to be stored in a `.env` file as an environment variable called `TOKEN`
@@ -41,5 +41,5 @@ API token has to be stored in a `.env` file as an environment variable called `T
 - Install the prerequisite libraries:
     - `python3 -m pip install -U discord.py`
     - `python3 -m pip install requests`
-- Run bot.py
-- Message `$help` in a channel in your server to get the list of commands
+- Run bot.py.
+- Message `$help` in a channel in your server to get the list of commands.
