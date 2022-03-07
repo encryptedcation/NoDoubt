@@ -1,5 +1,8 @@
 # NoDoubt
-Made by @cation03 (Ananya Goyal, 2021011) and @sociallyencrypted (Mehul Arora, 2021066)
+Made by @cation03 (Ananya Goyal, 2021011) and @sociallyencrypted (Mehul Arora, 2021066).
+
+
+NoDoubtBot is a discord bot with various resources to help you with your academic life, and gives you bite sized memes aand quotes to help you relax when you're tired!
 
 ## Resources
 - [GutenDex API](http://gutendex.com/)
@@ -43,3 +46,6 @@ API token has to be stored in a `.env` file as an environment variable called `T
     - `python3 -m pip install requests`
 - Run bot.py.
 - Message `$help` in a channel in your server to get the list of commands.
+
+## Thanks
+We would like to thank @aflah02 for allowing us to use his resources repository in our project.
