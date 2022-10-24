@@ -3,6 +3,9 @@ import os
 import requests
 import base64
 import random
+from dotenv import load_dotenv()
+
+load_dotenv()
 
 async def gutenDex(queries, author, channel):
     name = "Project Gutenberg"
