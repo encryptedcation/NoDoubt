@@ -158,7 +158,7 @@ def memes():
         return 'Sorry. Memes are currently unavailable. Must suffer a memeless existence.'
 
 
-class MyClient(discord.Client(intents=discord.Intents.default())):
+class MyClient(discord.Client):
 
     
     async def on_ready(self):
