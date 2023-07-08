@@ -171,7 +171,7 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         if message.author == client.user:
             return
-
+        
         if message.content.startswith("$resources"):
             title="SemWiseResourcesIIIT"
             url="https://api.github.com/repos/aflah02/SemWiseResourcesIIIT/contents/README.md"
@@ -229,18 +229,17 @@ class MyClient(discord.Client):
             await message.channel.send(embed=embed)
             
         if message.content.startswith("$help"):
-            help = '''
-            1. `$memes`: Gets random wholesome memes from Reddit.
-            2. `$xkcd`: Gets a random XKCD comic.
-            3. `$resources`: Gets list of courses for which resources are available from Aflah's Github repo. Use `$resources <coursename>` to get resources for the specific course.
-            4. `$b99`: Gets a random dialogue from Brooklyn Nine Nine.
-            5. `$getbook`: Gets 32 random books from Project Gutenberg. Select a book by entering its number to get the links for the book.
-                Note: You can use `$getbook <bookname>` to find a specific book.
-            6. `$define <word>:` Gets the definition of the word.
-            7. `$help`: Returns this menu.
-            '''
+            help = ["1. `$memes`: Gets random wholesome memes from Reddit.",
+            "2. `$xkcd`: Gets a random XKCD comic.",
+            "3. `$resources`: Gets list of courses for which resources are available from Aflah's Github repo. Use `$resources <coursename>` to get resources for the specific course.",
+            "4. `$b99`: Gets a random dialogue from Brooklyn Nine Nine.",
+            "5. `$getbook`: Gets 32 random books from Project Gutenberg. Select a book by entering its number to get the links for the book. Note: You can use `$getbook <bookname>` to find a specific book.",
+            "6. `$define <word>:` Gets the definition of the word.",
+            "7. `$help`: Returns this menu."]
+            
             embed = discord.Embed(title = 'Help',
-                description=help)
+                description="A list of commands that you can use with this bot.")
+            embed.add_field(name="Commands", value="\n".join(help))
             await message.channel.send(embed=embed)
           
         if message.content.startswith("$define"):
@@ -253,6 +252,7 @@ class MyClient(discord.Client):
             )
             await message.channel.send(embed=embed)
 
-          
-client = MyClient()
+intents = discord.Intents().default()          
+intents.message_content = True
+client = MyClient(intents=intents)
 client.run(os.getenv("TOKEN"))
